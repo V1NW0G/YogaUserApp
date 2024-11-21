@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MauiUserApp"
+             x:Class="MauiUserApp.MainPage">
+
+    <StackLayout Padding="10">
+        <Label Text="Courses" FontSize="24" HorizontalOptions="Center" />
+
+        <!-- RefreshView for pull-to-refresh functionality -->
+        <RefreshView x:Name="CoursesRefreshView" Refreshing="OnRefresh" IsRefreshing="{Binding IsRefreshing}">
+            
+            <!-- Display message if no courses are available -->
+            <Label x:Name="NoDataLabel" Text="Currently no course or class available" 
+                   IsVisible="False" 
+                   HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+
+            <!-- CollectionView to display courses -->
+            <CollectionView x:Name="CoursesCollectionView" SelectionChanged="CoursesCollectionView_SelectionChanged">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="10" Margin="5" BorderColor="Gray" CornerRadius="5">
+                            <StackLayout>
+                                <!-- Displaying CourseId -->
+                                <Label Text="{Binding Course.CourseId}" FontSize="18" FontAttributes="Bold" />
+
+                                <!-- Displaying other Course details -->
+                                <HorizontalStackLayout>
+                                    <Label Text="Day of Week:" FontAttributes="Bold" WidthRequest="100"/>
+                                    <Label Text="{Binding Course.DayOfWeek}" />
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout>
+                                    <Label Text="Time:" FontAttributes="Bold" WidthRequest="100"/>
+                                    <Label Text="{Binding Course.Time}" />
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout>
+                                    <Label Text="Duration:" FontAttributes="Bold" WidthRequest="100"/>
+                                    <Label Text="{Binding Course.Duration}" />
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout>
+                                    <Label Text="Capacity:" FontAttributes="Bold" WidthRequest="100"/>
+                                    <Label Text="{Binding Course.Capacity}" />
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout>
+                                    <Label Text="Price:" FontAttributes="Bold" WidthRequest="100"/>
+                                    <Label Text="{Binding Course.Price}" />
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout>
+                                    <Label Text="Type:" FontAttributes="Bold" WidthRequest="100"/>
+                                    <Label Text="{Binding Course.Type}" />
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout>
+                                    <Label Text="Description:" FontAttributes="Bold" WidthRequest="100"/>
+                                    <Label Text="{Binding Course.Description}" />
+                                </HorizontalStackLayout>
+
+                                <!-- Nested CollectionView to display classes for each course -->
+                                <CollectionView ItemsSource="{Binding Classes}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Frame Padding="10" Margin="5" BorderColor="LightGray" CornerRadius="5">
+                                                <StackLayout Spacing="5">
+                                                    <!-- HorizontalStackLayout for ClassId -->
+                                                    <HorizontalStackLayout>
+                                                        <Label Text="Class Id:" FontAttributes="Bold" WidthRequest="100"/>
+                                                        <Label Text="{Binding ClassId}" />
+                                                    </HorizontalStackLayout>
+
+                                                    <!-- HorizontalStackLayout for Date -->
+                                                    <HorizontalStackLayout>
+                                                        <Label Text="Date:" FontAttributes="Bold" WidthRequest="100"/>
+                                                        <Label Text="{Binding Date}" />
+                                                    </HorizontalStackLayout>
+
+                                                    <!-- HorizontalStackLayout for Teacher -->
+                                                    <HorizontalStackLayout>
+                                                        <Label Text="Teacher:" FontAttributes="Bold" WidthRequest="100"/>
+                                                        <Label Text="{Binding Teacher}" />
+                                                    </HorizontalStackLayout>
+
+                                                    <!-- HorizontalStackLayout for Comment -->
+                                                    <HorizontalStackLayout>
+                                                        <Label Text="Comment:" FontAttributes="Bold" WidthRequest="100"/>
+                                                        <Label Text="{Binding Comment}" />
+                                                    </HorizontalStackLayout>
+                                                </StackLayout>
+                                            </Frame>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </StackLayout>
+</ContentPage>
